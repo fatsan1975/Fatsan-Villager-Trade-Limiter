@@ -1,0 +1,152 @@
+# ============================================================
+# VillagerTradeLimiter
+# Target: Folia 1.21.11 / Paper 1.21.11
+# Best-effort support: Paper/Folia 1.21.x while these APIs stay compatible
+# ============================================================
+
+general:
+  # Master switch for the plugin.
+  enabled: true
+
+  # Extra console logging for recipe changes, restock changes, and locks.
+  debug: false
+
+worlds:
+  # BLACKLIST = active everywhere except listed worlds
+  # WHITELIST = active only in listed worlds
+  mode: "BLACKLIST"
+  list: []
+
+employment-lock:
+  # When a villager becomes employed, give it a tiny amount of villager XP.
+  # In vanilla 1.21.11, job loss only happens while villager XP is 0 and level <= 1.
+  enabled: true
+
+  # 1 is enough for the target version and does not unlock extra trades by itself.
+  lock-xp: 1
+
+  # Professions to skip entirely.
+  excluded-professions:
+    - NONE
+    - NITWIT
+
+  # If false, villagers marked as cured are ignored by this feature.
+  apply-to-cured: true
+
+rare-trades:
+  enabled: true
+
+  # REMOVE: remove the trade slot completely
+  # INCREASE_PRICE: keep the trade but multiply the first ingredient cost
+  # DOWNGRADE_LEVEL: reduce the triggered enchant by one level, then fall back
+  #                  to INCREASE_PRICE if the enchant is already level 1
+  fallback-action: "INCREASE_PRICE"
+
+  # Used when fallback-action is INCREASE_PRICE, or when DOWNGRADE_LEVEL cannot downgrade.
+  fallback-price-multiplier: 3.0
+
+  # Empty means all villager professions.
+  # Typical high-impact targets: LIBRARIAN, ARMORER, TOOLSMITH, WEAPONSMITH
+  target-professions:
+    - LIBRARIAN
+
+  # Key format accepts either "mending" or "minecraft:mending".
+  # block-chance applies to all levels unless level-penalties overrides a level.
+  enchantment-nerfs:
+    mending:
+      block-chance: 0.70
+    protection:
+      block-chance: 0.0
+      level-penalties:
+        4: 0.50
+    sharpness:
+      block-chance: 0.0
+      level-penalties:
+        5: 0.40
+    efficiency:
+      block-chance: 0.0
+      level-penalties:
+        5: 0.35
+    unbreaking:
+      block-chance: 0.0
+      level-penalties:
+        3: 0.30
+    fortune:
+      block-chance: 0.0
+      level-penalties:
+        3: 0.45
+    looting:
+      block-chance: 0.0
+      level-penalties:
+        3: 0.40
+    silk_touch:
+      block-chance: 0.30
+    density:
+      block-chance: 0.0
+      level-penalties:
+        5: 0.50
+    breach:
+      block-chance: 0.0
+      level-penalties:
+        4: 0.45
+    wind_burst:
+      block-chance: 0.25
+    swift_sneak:
+      block-chance: 0.0
+      level-penalties:
+        3: 0.40
+    soul_speed:
+      block-chance: 0.20
+
+discounts:
+  enabled: true
+
+  # Base multiplier for positive discount sources.
+  # 1.0 = vanilla-like discount strength
+  # 0.0 = fully remove positive discount contributions
+  discount-multiplier: 0.50
+
+  # Extra multiplier applied only to Hero of the Village.
+  hero-of-the-village-multiplier: 0.40
+
+  # Extra multiplier applied only to cure-style reputation
+  # (major/minor positive villager gossip).
+  cure-multiplier: 0.25
+
+  # Trades with emerald cost can never end up cheaper than this after discounts.
+  min-price: 1
+
+  # Optional per-profession override for the minimum emerald price floor.
+  profession-min-prices:
+    LIBRARIAN: 5
+
+balance:
+  enabled: true
+
+  # Multiply first-ingredient cost on newly generated trades for specific professions.
+  profession-price-multipliers:
+    LIBRARIAN: 1.50
+
+  # Minimum base cost for enchanted trades when they are first generated.
+  enchanted-book-min-price: 5
+
+  # Multiplies the recipe priceMultiplier so repeated usage drives demand harder.
+  demand-scaling-multiplier: 1.50
+
+  max-uses:
+    enabled: false
+    # Maximum uses for regular enchanted trades.
+    enchanted-books: 8
+    # Maximum uses for treasure-like / non-discoverable enchanted trades.
+    treasure-enchants: 4
+
+  restock-penalty:
+    enabled: false
+    # Fraction of max uses that becomes available after a restock.
+    # 0.75 means the trade only comes back to 75% capacity instead of 100%.
+    restore-fraction: 0.75
+
+  master-trade-scarcity:
+    enabled: false
+    # Chance to remove each newly acquired master-tier trade.
+    removal-chance: 0.30

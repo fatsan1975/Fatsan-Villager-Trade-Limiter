@@ -1,0 +1,34 @@
+name: FatsanVillagerTradeLimiter
+version: '${version}'
+main: com.fatsan.villagertrade.VillagerTradeLimiter
+api-version: '1.21'
+description: '${description}'
+folia-supported: true
+authors:
+  - Fatsan1975
+
+commands:
+  vtl:
+    description: VillagerTradeLimiter administration command
+    usage: /vtl <info|reload|debug>
+    aliases:
+      - villagertrade
+      - villagertradelimiter
+
+permissions:
+  vtl.admin:
+    description: Full access to VillagerTradeLimiter
+    default: op
+    children:
+      vtl.info: true
+      vtl.reload: true
+      vtl.debug: true
+  vtl.info:
+    description: View VillagerTradeLimiter status
+    default: op
+  vtl.reload:
+    description: Reload VillagerTradeLimiter
+    default: op
+  vtl.debug:
+    description: Toggle VillagerTradeLimiter debug output
+    default: op
